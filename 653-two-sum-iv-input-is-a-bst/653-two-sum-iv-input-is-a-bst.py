@@ -6,10 +6,11 @@
 #         self.right = right
 class Solution:
     def findTarget(self, root: Optional[TreeNode], T: int) -> bool:
-        cache = set()
+        offset = int(1e5) + 5
+        cache = [False for _ in range(int(2e5) + 10)]
         def dfs(node):
             if (not node): return False
-            if (T - node.val in cache): return True
-            cache.add(node.val)
+            if (cache[T - node.val + offset]): return True
+            cache[node.val + offset] = True
             return dfs(node.left) or dfs(node.right)
         return dfs(root)
